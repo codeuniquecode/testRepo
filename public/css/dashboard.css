@@ -1,72 +1,65 @@
-*{
-    padding: 0;
-    margin: 0;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
-.logo{
-    height: 70px;
-    width: 65px;
-}
-/* .sidebar{
-    height: 100vh;
-    width: 250px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    display: flex; 
-     flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    color: rgba(42, 180, 244, 255);
-} */
 
-a{
-    text-decoration: none;
-    /* color: rgba(42, 180, 244, 255) !important; */
+.logo {
+  height: 70px;
+  width: 65px;
 }
-a:hover, .v_name{
-    color: #DCAB27 ;
+
+a {
+  text-decoration: none;
+  color: black;
 }
-.active{
-    font-weight: bolder !important;
-    color: #DCAB27 !important;
+
+a:hover,
+.v_name {
+  color: #dcab27;
 }
-.custom-border{
-    border-right: 2px solid black;
+
+.active {
+  font-weight: bolder !important;
+  color: #dcab27 !important;
 }
+
 .fixed-sidebar {
-    position: fixed; /* Fix the sidebar */
-    top: 0; /* Align to the top */
-    left: 0; /* Align to the left */
-    height: 100vh; /* Make the sidebar take full height */
-    width: 180px; /* Set the width as needed */
-    display: flex; /* Use flexbox for centering */
-    flex-direction: column; /* Arrange items vertically */
-    justify-content: center; /* Center vertically */
-    align-items: flex-start;/* Center horizontally */
-    background-color: #fff; /* Optional: background color */
-    padding: 20px; /* Optional: padding around the content */
-}
-
-.sidebar {
-    display: flex;
-    flex-direction: column; /* Keep links stacked vertically */
-    align-items: flex-start; /* Center links horizontally */
-    width: 100%; /* Full width of the sidebar */
+  width: 230px;
+  min-height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #fff;
+  z-index: 1000;
 }
 
 .sidebar-link {
-    margin-bottom: 10px; /* Gap between links */
-    color: black !important; /* Default link color */
+  display: block;
+  padding: 10px 15px;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  color: black;
+  text-decoration: none;
 }
 
-.sidebar-link:last-child {
-    margin-bottom: 0; /* No gap for the last link */
+.sidebar-link:hover {
+  background-color: #f2f2f2;
+  border-radius: 5px;
 }
-.main-body{
-    padding-left: 190px;
+
+.main-body {
+  margin-left: 230px;
+  padding: 20px;
 }
-@media screen and (max-width:991px) {
-    .main-body{
-        padding-left: 0px;
-    }
+
+@media screen and (max-width: 991px) {
+  .fixed-sidebar {
+    display: none;
+  }
+
+  .main-body {
+    margin-left: 0;
+    padding: 15px;
+  }
 }
