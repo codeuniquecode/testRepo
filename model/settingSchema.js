@@ -11,4 +11,5 @@ const siteSettingsSchema = new mongoose.Schema({
   footer: { type: String }
 }, { timestamps: true });
 
-module.exports = mongoose.model('SiteSettings', siteSettingsSchema);
+const setting = mongoose.model("setting",siteSettingsSchema);
+module.exports= setting;

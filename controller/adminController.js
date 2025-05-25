@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 const contact = require("../model/contactSchema");
 const activity = require("../model/activitySchema");
 const bank = require("../model/bankInfoSchema");
-
+const setting = require('../model/settingSchema');
 exports.renderLoginPage = (req,res)=>{
     // return res.status(200).json({message:"load login page"});
     return res.render('login');
@@ -231,6 +231,63 @@ exports.updateAccountInfo = async (req, res) => {
   }
 };
 
-exports.renderSettings = (req,res)=>{
-    return res.render('siteSettings');
+// const SiteSettings = require('../models/siteSettings');
+// const setting = require("../model/settingSchema");
+
+exports.renderSettings = async (req, res) => {
+  try {
+    // Check if settings already exist
+    let site = await setting.findOne();
+
+    // // If not, create default settings
+    // if (!site) {
+    //   site = await setting.create({
+    //     siteName: "Ashish Social Service",
+    //     tagline: "Empowering Communities Together",
+    //     email: "contact@ashishservice.org",
+    //     phone: "+977-9800000000",
+    //     address: "Old Baneshwor, Kathmandu, Nepal",
+    //     facebook: "https://facebook.com/ashishsocial",
+    //     instagram: "https://instagram.com/ashishsocial",
+    //     footer: "© 2025 Ashish Social Service. All rights reserved."
+    //   });
+    // }
+
+    // Render the view and pass the settings
+    return res.render('siteSettings', { site });
+
+  } catch (error) {
+    console.error("Error rendering settings:", error);
+    res.status(500).send("Internal Server Error");
+  }
+};
+exports.updateSettings=async(req,res)=>{
+     try {
+    const data = {
+      siteName: req.body.siteName,
+      tagline: req.body.tagline,
+      email: req.body.email,
+      phone: req.body.phone,
+      address: req.body.address,
+      facebook: req.body.facebook,
+      instagram: req.body.instagram,
+      footer: req.body.footer,
+      updatedAt: new Date()
+    };
+
+    // Update the existing document, or insert if none exists
+    await setting.findOneAndUpdate({}, data, {
+      new: true,
+      upsert: true
+//       upsert: true
+// If no matching document is found, then create a new one using data.
+
+// "Upsert" = "Update" + "Insert".
+    });
+
+    res.redirect('/setting'); // Redirect back to settings page
+  } catch (error) {
+    console.error("Error updating site settings:", error);
+    res.status(500).send("Failed to update site settings.");
+  }
 }
