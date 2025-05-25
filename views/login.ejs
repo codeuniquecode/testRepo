@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | WatchGalleria</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/2c8d038c04.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="icon" href="/images/logo.png" type="website icon">
+    <style>
+        .w{
+            color: var(--primary-color);
+
+        }
+        .g{
+            color:var(--secondary-color);
+        }
+        .w,.g{
+            font-weight: bold;
+        }
+        .error {
+             color: red;
+            font-weight: bold;
+            }
+
+        @media (min-width: 768px){
+             input{
+            width: 75%;
+             }
+        } 
+        .a{
+            color: var(--primary-color) !important;
+            cursor:pointer !important;
+        }
+        /* @media (min-width: 1400px) and (max-width: 1440px){
+           .loginform{
+               margin-top: 15%;
+           }
+        } */
+      
+       
+    </style>
+</head>
+<body>
+         <div class="loginform">
+         <div class="container  text-center mt-3">
+            <%if(typeof message !== 'undefined' && message){%>
+            <div class="alert alert-danger alert-dismissible fade show text-dark bg-light mt-3 mt-sm-2" role="alert">
+              <strong><%= message %></strong>
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+          <%}%>
+            <h2 class="custom-container">Welcome </h2>
+            <form id="loginForm" method="post" action="/login">
+                <div class="mb-3 text-center">
+                  <label for="exampleInputEmail1" class="form-label">Email address</label>
+                  <input type="email" name="email" class="form-control w-50 text-center mx-auto" id="exampleInputEmail1" aria-describedby="emailHelp">
+                  
+                  <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                </div>
+                <div class="mb-3 text-center">
+                  <label for="exampleInputPassword1" class="form-label">Password</label>
+                  <input type="password" name="password" class="form-control w-50 text-center mx-auto" id="exampleInputPassword1">
+                  <div id="passwordHelpBox" class="form-text"> Your password must be minimum 8 characters long, contain letters and numbers or special characters only.</div>
+                </div>
+               
+                <button type="submit" class="btn btn-primary w-25 " id="btnsubmit">Submit</button>
+                <button type="reset" class="btn btn-primary w-25">Reset</button>
+              </form>
+         </div>
+        </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>
