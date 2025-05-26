@@ -83,7 +83,9 @@ exports.renderAdminDashboard = async(req,res)=>{
     const totalActivity = activities.length;
     const notices = await notice.find();
     const totalNotice = notices.length;
-    return res.render('adminDashboard',{totalContacts,totalActivity,totalNotice});
+    const vacancies = await vacancy.find();
+    const totalVacancy = vacancies.length;
+    return res.render('adminDashboard',{totalContacts,totalActivity,totalNotice,totalVacancy});
 }
 exports.logout = (req,res)=>{
     res.clearCookie('token');
@@ -311,7 +313,7 @@ exports.postNotice = async(req,res)=>{
     if(!addNotice){
         return res.status(404).json({message:"error in adding notice"});
     }
-    return res.redirect('/adminDashboard');
+    return res.redirect('/viewNotice');
 
 }
 exports.renderAllNotice = async(req,res)=>{
@@ -395,7 +397,7 @@ exports.updateVacancy=async(req,res)=>{
     }
    
 }
-exports.renderVacancyPage=async(req,res)=>{
+exports.renderEditVacancyPage=async(req,res)=>{
     const vacancyData = await vacancy.findOne({
         _id:req.params.id
     });
