@@ -1,5 +1,5 @@
 const express = require('express');
-const { renderLoginPage, validateAdmin, renderRegisterPage, saveAdmin, renderAdminDashboard, logout, handleContact, renderAllContacts, markAsRead, renderActivity, renderAddActivityPage, addActivity, deleteActivity, renderEditActivity, updateActivity, renderAccountPage, updateAccountInfo, renderSettings, updateSettings, renderNoticePage, postNotice, renderAllNotice, deleteNotice, updateNotice, updateStatus } = require('../controller/adminController');
+const { renderLoginPage, validateAdmin, renderRegisterPage, saveAdmin, renderAdminDashboard, logout, handleContact, renderAllContacts, markAsRead, renderActivity, renderAddActivityPage, addActivity, deleteActivity, renderEditActivity, updateActivity, renderAccountPage, updateAccountInfo, renderSettings, updateSettings, renderNoticePage, postNotice, renderAllNotice, deleteNotice, updateNotice, updateStatus, renderVacancyPage, postVacancy, renderAllVacancy, deleteVacancy, updateVacancy } = require('../controller/adminController');
 const { isAuthenticated } = require('../middleware/isAuthenticated');
 const router = express.Router();
 // const multer = require('../middleware/multerConfig').multer;
@@ -21,4 +21,8 @@ router.route('/setting').get(isAuthenticated,renderSettings).post(isAuthenticate
 router.route('/addNotice').get(isAuthenticated,renderNoticePage).post(isAuthenticated,upload.single('noticeFile'),postNotice);
 router.route('/viewNotice').get(isAuthenticated,renderAllNotice);
 router.route('/notice/:id').delete(isAuthenticated,deleteNotice).patch(isAuthenticated,updateStatus);
+router.route('/postVacancy').get(isAuthenticated,renderVacancyPage).post(isAuthenticated,postVacancy);
+router.route('/viewVacancy').get(isAuthenticated,renderAllVacancy);
+router.route('/vacancy/:id').delete(isAuthenticated,deleteVacancy).patch(isAuthenticated,updateVacancy).get(isAuthenticated,renderVacancyPage);
+
 module.exports= router;

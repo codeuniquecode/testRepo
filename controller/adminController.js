@@ -9,6 +9,7 @@ const activity = require("../model/activitySchema");
 const bank = require("../model/bankInfoSchema");
 const setting = require('../model/settingSchema');
 const notice = require('../model/noticeSchema');
+const vacancy = require("../model/vacancySchema");
 exports.renderLoginPage = (req,res)=>{
     // return res.status(200).json({message:"load login page"});
     return res.render('login');
@@ -322,6 +323,15 @@ exports.deleteNotice = async(req,res)=>{
     if(!deleteData){
         return res.status(404).json({message:"error in deleting data"});
     }
+    const oldPic = deleteData.file;
+    fs.unlink('storage/'+oldPic,(err)=>{
+        if(err){
+            console.log('error in deleting old file');
+        }
+        else{
+            console.log('old image deleted successfully');
+        }
+    })
     const notices = await notice.find();
     return res.render('allNotice',{notices});
 }
@@ -337,3 +347,60 @@ exports.updateStatus = async (req, res) => {
   const notices = await notice.find();
   return res.render('allNotice', { notices });
 };
+exports.renderVacancyPage = (req,res)=>{
+    return res.render('vacancy');
+}
+exports.postVacancy=async (req,res) => {
+    const {title,department,number,description,qualification,deadline}= req.body;
+    const postData = new vacancy({
+        title,
+        department,
+        number,
+        description,
+        qualification,
+        deadline
+    });
+    await postData.save();
+    if(!postData){
+        return res.status(404).json({message:"error in posting vacancy"});
+    }
+  
+    const vacancies = await vacancy.find();
+    return res.render('allVacancy',{vacancies});
+}
+exports.renderAllVacancy= async(req,res)=>{
+    const vacancies = await vacancy.find();
+    return res.render('allVacancy',{vacancies});
+}
+exports.deleteVacancy= async(req,res)=>{
+    const deleteData = await vacancy.findByIdAndDelete(req.params.id);
+    if(!deleteData){
+        return res.status(404).json({message:"error in deleting vacancy"});
+    }
+    
+    const vacancies = await vacancy.find();
+    return res.render('allVacancy',{vacancies});
+}
+exports.updateVacancy=async(req,res)=>{
+    try {
+         const updateVacancy = await vacancy.findByIdAndUpdate(req.params.id,req.body);
+         if(!updateVacancy){
+            return res.status(404).json({message:"error in updating vacancy"});
+         }
+         
+    const vacancies = await vacancy.find();
+    return res.render('allVacancy',{vacancies});
+    } catch (error) {
+        console.log('error in updating vacancy');
+    }
+   
+}
+exports.renderVacancyPage=async(req,res)=>{
+    const vacancyData = await vacancy.findOne({
+        _id:req.params.id
+    });
+    if(!vacancyData){
+        return res.status(404).json({message:"error in finding vacancy"})
+    }
+    return res.render('editVacancy',{vacancyData});
+}
