@@ -8,9 +8,10 @@ app.use(express.static('./public/'));
 app.use(express.static('./storage/'));
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
-const multer = require('./middleware/multerConfig').multer;
-const storage = require('./middleware/multerConfig').storage;
-const upload = multer({storage:storage});
+// const multer = require('./middleware/multerConfig').multer;
+// const storage = require('./middleware/multerConfig').storage;
+// const upload = multer({storage:storage});
+// const upload = require('./middleware/multerConfig');
 
 const methodOverride = require('method-override');
 

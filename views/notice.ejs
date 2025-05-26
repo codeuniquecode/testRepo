@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Upload Notice</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container-form {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .form-box {
+            max-width: 500px;
+            width: 100%;
+            padding: 30px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            background: white;
+            transition: 0.3s ease-in-out;
+        }
+        .form-box:hover {
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+        }
+        .btn-primary {
+            font-size: 1.1rem;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body class="bg-light">
+
+    <div class="container container-form">
+        <div class="form-box">
+            <h3 class="text-center mb-4">Upload Notice</h3>
+            <form action="/addNotice" method="POST" enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label class="form-label">Notice Title</label>
+                    <input type="text" name="title" class="form-control" required placeholder="Enter notice title">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Upload File (PDF/Image)</label>
+                    <input type="file" name="noticeFile" class="form-control" accept=".jpg,.jpeg,.png,.gif,.pdf" required>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">Upload Notice</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

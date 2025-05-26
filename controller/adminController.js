@@ -8,6 +8,7 @@ const contact = require("../model/contactSchema");
 const activity = require("../model/activitySchema");
 const bank = require("../model/bankInfoSchema");
 const setting = require('../model/settingSchema');
+const notice = require('../model/noticeSchema');
 exports.renderLoginPage = (req,res)=>{
     // return res.status(200).json({message:"load login page"});
     return res.render('login');
@@ -79,7 +80,9 @@ exports.renderAdminDashboard = async(req,res)=>{
     const totalContacts = contacts.length;
     const activities = await activity.find();
     const totalActivity = activities.length;
-    return res.render('adminDashboard',{totalContacts,totalActivity});
+    const notices = await notice.find();
+    const totalNotice = notices.length;
+    return res.render('adminDashboard',{totalContacts,totalActivity,totalNotice});
 }
 exports.logout = (req,res)=>{
     res.clearCookie('token');
@@ -295,8 +298,42 @@ exports.updateSettings=async(req,res)=>{
   }
 }
 exports.renderNoticePage = async(req,res)=>{
-    res.send('render notice page');
+    return res.render('notice');
 }
 exports.postNotice = async(req,res)=>{
-    res.send('post notice here');
+    const {title} = req.body;
+    const addNotice = new notice({
+        title,
+        file:req.file.filename
+    }) ;
+    await addNotice.save();
+    if(!addNotice){
+        return res.status(404).json({message:"error in adding notice"});
+    }
+    return res.redirect('/adminDashboard');
+
 }
+exports.renderAllNotice = async(req,res)=>{
+    const notices = await notice.find();
+    return res.render('allNotice',{notices});
+}
+exports.deleteNotice = async(req,res)=>{
+    const deleteData = await notice.findByIdAndDelete(req.params.id);
+    if(!deleteData){
+        return res.status(404).json({message:"error in deleting data"});
+    }
+    const notices = await notice.find();
+    return res.render('allNotice',{notices});
+}
+exports.updateStatus = async (req, res) => {
+  const currentNotice = await notice.findById(req.params.id);
+  if (!currentNotice) {
+    return res.status(404).json({ message: "Notice not found" });
+  }
+
+  currentNotice.isActive = !currentNotice.isActive;
+  await currentNotice.save();
+
+  const notices = await notice.find();
+  return res.render('allNotice', { notices });
+};

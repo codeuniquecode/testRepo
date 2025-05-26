@@ -1,10 +1,12 @@
 const express = require('express');
-const { renderLoginPage, validateAdmin, renderRegisterPage, saveAdmin, renderAdminDashboard, logout, handleContact, renderAllContacts, markAsRead, renderActivity, renderAddActivityPage, addActivity, deleteActivity, renderEditActivity, updateActivity, renderAccountPage, updateAccountInfo, renderSettings, updateSettings, renderNoticePage, postNotice } = require('../controller/adminController');
+const { renderLoginPage, validateAdmin, renderRegisterPage, saveAdmin, renderAdminDashboard, logout, handleContact, renderAllContacts, markAsRead, renderActivity, renderAddActivityPage, addActivity, deleteActivity, renderEditActivity, updateActivity, renderAccountPage, updateAccountInfo, renderSettings, updateSettings, renderNoticePage, postNotice, renderAllNotice, deleteNotice, updateNotice, updateStatus } = require('../controller/adminController');
 const { isAuthenticated } = require('../middleware/isAuthenticated');
 const router = express.Router();
-const multer = require('../middleware/multerConfig').multer;
+// const multer = require('../middleware/multerConfig').multer;
+const upload = require('../middleware/multerConfig');
+
 const storage = require('../middleware/multerConfig').storage;
-const upload = multer({storage:storage});
+// const upload = multer({storage:storage});
 router.route('/login').get(renderLoginPage).post(validateAdmin);
 router.route('/adminRegister').get(renderRegisterPage).post(saveAdmin);
 router.route('/adminDashboard').get(isAuthenticated,renderAdminDashboard);
@@ -16,5 +18,7 @@ router.route('/addActivity').get(isAuthenticated,renderAddActivityPage).post(isA
 router.route('/activity/:id').delete(isAuthenticated,deleteActivity).get(isAuthenticated,renderEditActivity).patch(isAuthenticated,upload.single('image'),updateActivity);
 router.route('/viewAccount').get(isAuthenticated,renderAccountPage).patch(isAuthenticated,upload.single('image'),updateAccountInfo);
 router.route('/setting').get(isAuthenticated,renderSettings).post(isAuthenticated,updateSettings);
-router.route('/addNotice').get(isAuthenticated,renderNoticePage).post(isAuthenticated,upload.single('image'),postNotice);
+router.route('/addNotice').get(isAuthenticated,renderNoticePage).post(isAuthenticated,upload.single('noticeFile'),postNotice);
+router.route('/viewNotice').get(isAuthenticated,renderAllNotice);
+router.route('/notice/:id').delete(isAuthenticated,deleteNotice).patch(isAuthenticated,updateStatus);
 module.exports= router;
