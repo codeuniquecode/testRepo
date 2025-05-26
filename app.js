@@ -22,9 +22,8 @@ app.use(session({
     saveUninitialized:false
 }))
 const port = process.env.port;
-app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+app.use(express.json());
 require('./model/index');
 const admin = require('./model/adminSchema');
 const adminRoutes = require('./routes/adminRoutes');

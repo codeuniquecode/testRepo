@@ -17,6 +17,10 @@ const bankSchema = new mongoose.Schema({
     accountNumber:{
         type:String,
         required:true
+    },
+    qr:{
+        type:String,
+        required:true,
     }
 });
 const bank = mongoose.model("bank",bankSchema);

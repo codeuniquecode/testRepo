@@ -212,14 +212,17 @@ exports.renderAccountPage = async(req,res)=>{
 }
 exports.updateAccountInfo = async (req, res) => {
   const { bankName, branchInfo, accountName, accountNumber } = req.body;
+//   console.log(req.body,req.file.filename);
+
 
   try {
     const updated = await bank.findOneAndUpdate({}, {
       bankName,
       branchInfo,
       accountName,
-      accountNumber
-    }, { new: true });
+      accountNumber,
+      qr:req.file.filename
+    }, { new: true,upsert: true });
 
     if (updated) {
         return res.render('account',{updated})
@@ -290,4 +293,10 @@ exports.updateSettings=async(req,res)=>{
     console.error("Error updating site settings:", error);
     res.status(500).send("Failed to update site settings.");
   }
+}
+exports.renderNoticePage = async(req,res)=>{
+    res.send('render notice page');
+}
+exports.postNotice = async(req,res)=>{
+    res.send('post notice here');
 }

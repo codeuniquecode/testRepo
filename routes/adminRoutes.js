@@ -1,5 +1,5 @@
 const express = require('express');
-const { renderLoginPage, validateAdmin, renderRegisterPage, saveAdmin, renderAdminDashboard, logout, handleContact, renderAllContacts, markAsRead, renderActivity, renderAddActivityPage, addActivity, deleteActivity, renderEditActivity, updateActivity, renderAccountPage, updateAccountInfo, renderSettings, updateSettings } = require('../controller/adminController');
+const { renderLoginPage, validateAdmin, renderRegisterPage, saveAdmin, renderAdminDashboard, logout, handleContact, renderAllContacts, markAsRead, renderActivity, renderAddActivityPage, addActivity, deleteActivity, renderEditActivity, updateActivity, renderAccountPage, updateAccountInfo, renderSettings, updateSettings, renderNoticePage, postNotice } = require('../controller/adminController');
 const { isAuthenticated } = require('../middleware/isAuthenticated');
 const router = express.Router();
 const multer = require('../middleware/multerConfig').multer;
@@ -14,6 +14,7 @@ router.route('/isRead/:id').post(isAuthenticated,markAsRead);
 router.route('/viewActivity').get(isAuthenticated,renderActivity);
 router.route('/addActivity').get(isAuthenticated,renderAddActivityPage).post(isAuthenticated,upload.single('image'),addActivity);
 router.route('/activity/:id').delete(isAuthenticated,deleteActivity).get(isAuthenticated,renderEditActivity).patch(isAuthenticated,upload.single('image'),updateActivity);
-router.route('/viewAccount').get(isAuthenticated,renderAccountPage).patch(isAuthenticated,updateAccountInfo);
+router.route('/viewAccount').get(isAuthenticated,renderAccountPage).patch(isAuthenticated,upload.single('image'),updateAccountInfo);
 router.route('/setting').get(isAuthenticated,renderSettings).post(isAuthenticated,updateSettings);
+router.route('/addNotice').get(isAuthenticated,renderNoticePage).post(isAuthenticated,upload.single('image'),postNotice);
 module.exports= router;
